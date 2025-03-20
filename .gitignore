@@ -1,4 +1,4 @@
-# Ignore system files
+# System Files
 .DS_Store
 Thumbs.db
 
@@ -12,22 +12,16 @@ backend/*.log
 backend/.env
 backend/.pytest_cache/
 
-# Ignore compiled and cached files
-*.pyc
-*.pyo
-*.pyd
-__pycache__/
-
 # Machine Learning files
-backend/chatbot/ml/*.pkl
-backend/chatbot/ml/__pycache__/
+backend/ml/*.pkl
+backend/ml/__pycache__/
 
 # Virtual environment
 venv/
 env/
 *.egg-info/
 
-# Node.js / React Native
+# Node.js / React Native (Expo)
 frontend/node_modules/
 frontend/.expo/
 frontend/.expo-shared/
@@ -54,3 +48,14 @@ debug.log
 .vscode/
 .idea/
 *.sublime-workspace
+
+# Expo specific
+frontend/.expo/
+frontend/.expo-shared/
+frontend/.expo/cache/
+frontend/.expo/packager-info.json
+frontend/.expo/settings.json
+
+# Ignore environment variables
+frontend/.env
+backend/.env
