@@ -1,0 +1,56 @@
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Python / Django
+backend/venv/
+backend/__pycache__/
+backend/db.sqlite3
+backend/*.pyc
+backend/*.pyo
+backend/*.log
+backend/.env
+backend/.pytest_cache/
+
+# Ignore compiled and cached files
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Machine Learning files
+backend/chatbot/ml/*.pkl
+backend/chatbot/ml/__pycache__/
+
+# Virtual environment
+venv/
+env/
+*.egg-info/
+
+# Node.js / React Native
+frontend/node_modules/
+frontend/.expo/
+frontend/.expo-shared/
+frontend/.vscode/
+frontend/.DS_Store
+frontend/yarn-error.log
+frontend/npm-debug.log
+frontend/metro.config.js
+
+# Android / iOS Build
+frontend/android/.gradle/
+frontend/android/app/build/
+frontend/android/build/
+frontend/android/.idea/
+frontend/ios/Pods/
+frontend/ios/build/
+frontend/ios/.DS_Store
+
+# Ignore logs and debug files
+*.log
+debug.log
+
+# Ignore editor / IDE-specific files
+.vscode/
+.idea/
+*.sublime-workspace
