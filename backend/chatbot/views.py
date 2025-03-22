@@ -4,6 +4,9 @@ from .models import Chat
 from .serializers import ChatSerializer
 from .ml.predict import chatbot_response  # ML integration
 
+@api_view(["GET"])
+def test_view(request):
+    return Response({"message": "Chatbot backend is running!"})
 
 @api_view(["POST"])
 def chat(request):
