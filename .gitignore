@@ -9,7 +9,7 @@ backend/db.sqlite3
 backend/*.pyc
 backend/*.pyo
 backend/*.log
-backend/.env
+./backend/env
 backend/.pytest_cache/
 
 # Machine Learning files
@@ -59,3 +59,4 @@ frontend/.expo/settings.json
 # Ignore environment variables
 frontend/.env
 backend/.env
+
