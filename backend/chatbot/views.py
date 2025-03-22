@@ -1,6 +1,6 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .models import Chat
+#from .models import Chat
 from .serializers import ChatSerializer
 from .ml.predict import chatbot_response  # ML integration
 
