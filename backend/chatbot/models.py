@@ -6,6 +6,7 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
+import uuid
 
 
 class AiDiagnoses(models.Model):
@@ -91,17 +92,21 @@ class AuthUserUserPermissions(models.Model):
 
 
 class Chats(models.Model):
-    id = models.UUIDField(primary_key=True)
+    STATUS_CHOICES = [
+        ('open', 'Open'),
+        ('in_review', 'In Review'),
+        ('resolved', 'Resolved')
+    ]
+    
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     patient = models.ForeignKey('Patients', models.DO_NOTHING)
     clinician = models.ForeignKey('Clinicians', models.DO_NOTHING, blank=True, null=True)
     category = models.ForeignKey('QueryCategories', models.DO_NOTHING, blank=True, null=True)
-    status = models.CharField(max_length=50, blank=True, null=True)
-    created_at = models.DateTimeField(blank=True, null=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='open')
+    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        managed = False
         db_table = 'chats'
-
 
 class ClinicianVerdicts(models.Model):
     id = models.UUIDField(primary_key=True)
@@ -116,17 +121,22 @@ class ClinicianVerdicts(models.Model):
 
 
 class Clinicians(models.Model):
-    id = models.OneToOneField('Users', models.DO_NOTHING, db_column='id', primary_key=True)
+    id = models.OneToOneField(
+        'Users', 
+        models.CASCADE,
+        db_column='id',
+        primary_key=True
+    )
     specialization = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
+    years_of_experience = models.PositiveIntegerField(null=True, blank=True)
+    qualification = models.CharField(max_length=255, blank=True, null=True)
     rating = models.DecimalField(max_digits=3, decimal_places=2, blank=True, null=True)
-    verified = models.BooleanField(blank=True, null=True)
-    hospital = models.ForeignKey('Hospital', models.DO_NOTHING)
+    verified = models.BooleanField(default=False)
+    hospital = models.ForeignKey('Hospital', models.CASCADE)
 
     class Meta:
-        managed = False
         db_table = 'clinicians'
-
 
 class DjangoAdminLog(models.Model):
     action_time = models.DateTimeField()
@@ -215,13 +225,17 @@ class Notifications(models.Model):
 
 
 class Patients(models.Model):
-    id = models.OneToOneField('Users', models.DO_NOTHING, db_column='id', primary_key=True)
-    age = models.IntegerField()
+    id = models.OneToOneField(
+        'Users',
+        models.CASCADE,
+        db_column='id',
+        primary_key=True
+    )
+    date_of_birth = models.DateField(null=True, blank=True)
     weight = models.DecimalField(max_digits=5, decimal_places=2)
     allergies = models.TextField(blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'patients'
 
 
@@ -248,16 +262,27 @@ class Symptoms(models.Model):
 
 
 class Users(models.Model):
-    id = models.UUIDField(primary_key=True)
-    name = models.CharField(max_length=255)
+    GENDER_CHOICES = [
+        ('male', 'Male'),
+        ('female', 'Female')
+    ]
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=255, null=True, blank=True)
     email = models.CharField(unique=True, max_length=255)
     password_hash = models.CharField(max_length=1000)
     role = models.CharField(max_length=50)
-    created_at = models.DateTimeField(blank=True, null=True)
+    gender = models.CharField(
+        max_length=6,
+        choices=GENDER_CHOICES,
+        null=True,
+        blank=True
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        managed = False
         db_table = 'users'
+
 class Chat(models.Model):
     user_input = models.TextField()
     bot_response = models.TextField()
