@@ -1,9 +1,12 @@
-import { Stack } from "expo-router";
+import { Slot } from 'expo-router';
+import { View, Text } from 'react-native';
 import "./globals.css"
-export default function RootLayout() {
-  return <Stack>
-    <Stack.Screen name = "(tabs)" options={{headerShown:false}}/>
-
-    <Stack.Screen name="movie/[id]" options={{headerShown:false}}/ >
-  </Stack>;
+export default function Layout() {
+  return (
+    <View style={{ flex: 1 }}>
+      
+      <Slot />  {/* This renders child screens dynamically (landing.tsx, login.tsx) */}
+      
+    </View>
+  );
 }
