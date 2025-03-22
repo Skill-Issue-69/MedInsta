@@ -1,8 +1,9 @@
 # chatbot/urls.py
 from django.urls import path
-from . import views
+from . import views,auth_views
 
 urlpatterns = [
     path('test/', views.test_view, name='test'),
-    # Add more routes as needed
+    path('register/', auth_views.register_view, name='register'),
+    path('login/', auth_views.login_view, name='login'),
 ]
