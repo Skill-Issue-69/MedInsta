@@ -100,7 +100,7 @@ const Assessment = () => {
                     },
                 ],
             };
-
+            console.log(routeParams.chats);
             router.push({
                 pathname: "/screens/Chat",
                 params: routeParams,

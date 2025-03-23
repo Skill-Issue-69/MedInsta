@@ -1,7 +1,7 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import avatar from "../../assets/images/avatar.jpg";
-const ChatCard = ({ chatId, name, symptomps, date }) => {
+const ChatCard = ({ chatId, sender, date, symptom }) => {
     const { id, setId } = useState(chatId);
     return (
         <TouchableOpacity
@@ -16,10 +16,10 @@ const ChatCard = ({ chatId, name, symptomps, date }) => {
             </View>
             <View className="flex-col-1 items-start flex-grow">
                 <Text className="font-bold text-xl text-left w-full">
-                    {name}
+                    {sender}
                 </Text>
-                <Text className="font-light text-lg text-left w-full">
-                    {symptomps}
+                <Text className="font-bold text-xl text-left w-full">
+                    {symptom && symptom.description}
                 </Text>
             </View>
             <View className="flex-col ">
