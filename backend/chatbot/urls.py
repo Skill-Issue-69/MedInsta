@@ -12,6 +12,8 @@ urlpatterns = [
     path('chats/', chat_views.create_chat),
     path('messaages/', chat_views.add_message),
     path('users/<uuid:user_id>/', auth_views.update_user, name='update-user'),
-    path('chats/<uuid:chat_id>/', chat_views.update_chat, name='update-chat'),
-    path('chats/<uuid:user_id>/', chat_views.get_chats, name='get-chat')
+    path('chats/create/<uuid:chat_id>/', chat_views.update_chat, name='update-chat'),
+    path('chats/<uuid:user_id>/', chat_views.get_chats, name='get-chats'),
+    
+
 ]
