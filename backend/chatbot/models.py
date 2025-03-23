@@ -134,6 +134,7 @@ class Clinicians(models.Model):
     rating = models.DecimalField(max_digits=3, decimal_places=2, blank=True, null=True)
     verified = models.BooleanField(default=False)
     hospital = models.ForeignKey('Hospital', models.CASCADE)
+    current_chats = models.IntegerField(default=0)
 
     class Meta:
         db_table = 'clinicians'
