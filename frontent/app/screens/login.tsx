@@ -8,18 +8,21 @@ import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { AuthContext } from "../redux_wra/AuthContext";
 
 export default function LoginScreen() {
+    const { role } = useContext(AuthContext);
     const router = useRouter();
     const [emailInput, setEmailInput] = useState("");
     const [password, setpassword] = useState("");
     const { login } = useContext(AuthContext);
     const handleLogin = async () => {
-        const role = login({ emailInput, password });
-        if (role && role == "patient") {
-            router.push("/screens/Patient/home");
-        } else if (role && role == "hospital") {
-            router.push("/screens/Doctor/home");
-        } else if (role && role == "doctor") {
-            router.push("/screens/Hospital/home");
+        const check = login({ email: emailInput, password: password });
+        if (check) {
+            if (role == "patient") {
+                router.push("/screens/Patient/home");
+            } else if (role == "hospital") {
+                router.push("/screens/Doctor/home");
+            } else if (role == "doctor") {
+                router.push("/screens/Hospital/home");
+            }
         } else {
             console.log("Login Failed!");
             alert("login Failed!");
@@ -34,6 +37,7 @@ export default function LoginScreen() {
                     editable
                     placeholder="Enter your email"
                     onChangeText={(newText) => setEmailInput(newText)}
+                    inputMode="email"
                     keyboardType="email-address"
                     defaultValue={emailInput}
                     className="border border-gray-300 w-3/4 p-3 mb-4 rounded-lg"

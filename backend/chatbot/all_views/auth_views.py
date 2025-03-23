@@ -119,6 +119,7 @@ def login_view(request):
     """
     try:
         data = request.data
+        print(data)
         if not (email := data.get("email")):
             return Response({"error": "Email required"}, status=400)
         if not (password := data.get("password")):
