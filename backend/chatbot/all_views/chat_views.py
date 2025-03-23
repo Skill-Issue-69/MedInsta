@@ -232,7 +232,7 @@ def add_message(request):
             {
                 "message_id": str(message.id),
                 "diagnosis_id": str(diagnosis.id),
-                "ai_response": f"AI Update: {ml_response.get('summary', 'New analysis')}",
+                "ai_response": f"AI Update: {ml_response}",
             },
             status=201,
         )
