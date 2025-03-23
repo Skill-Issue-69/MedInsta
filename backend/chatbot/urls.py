@@ -14,4 +14,7 @@ urlpatterns = [
     path("users/<uuid:user_id>/", auth_views.update_user, name="update-user"),
     path("chats/create/<uuid:chat_id>/", chat_views.update_chat, name="update-chat"),
     path("chats/<uuid:user_id>/", chat_views.get_chats, name="get-chats"),
+    path('chats/<uuid:chat_id>/messages/<uuid:user_id>/', 
+         chat_views.get_messages, 
+         name='get-messages'),
 ]

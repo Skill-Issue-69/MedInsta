@@ -373,3 +373,63 @@ def get_chats(request, user_id):
     )
 
     return Response(response_list)
+
+
+@api_view(['GET'])
+def get_messages(request, chat_id, user_id):
+    try:
+        # Validate UUIDs
+        chat_uuid = (chat_id)
+        user_uuid = (user_id)
+        
+        # Get user and chat
+        user = Users.objects.get(id=user_uuid)
+        chat = Chats.objects.get(id=chat_uuid)
+        
+        # Verify user has access to the chat
+        if not (user == chat.patient.id or user == chat.clinician.id.id):
+            return Response({'error': 'Unauthorized access'}, status=status.HTTP_403_FORBIDDEN)
+
+        # Get messages with sender details
+        messages = Messages.objects.filter(chat=chat).order_by('timestamp').select_related('sender')
+        
+        response_data = {
+            'chat_id': str(chat.id),
+            'participants': {
+                'patient': {
+                    'id': str(chat.patient.id.id),
+                    'name': chat.patient.id.name
+                },
+                'clinician': {
+                    'id': str(chat.clinician.id.id),
+                    'name': chat.clinician.id.name
+                } if chat.clinician else None
+            },
+            'messages': [
+                {
+                    'id': str(msg.id),
+                    'content': msg.message,
+                    'type': msg.message_type,
+                    'timestamp': msg.timestamp.isoformat(),
+                    'sender': {
+                        'id': str(msg.sender.id),
+                        'name': msg.sender.name,
+                        'role': msg.sender.role,
+                        'is_me': msg.sender == user
+                    },
+                    'media_url': msg.media_url
+                } for msg in messages
+            ]
+        }
+
+        return Response(response_data)
+    
+    except (ValueError, Users.DoesNotExist):
+        return Response({'error': 'Invalid user ID'}, status=status.HTTP_404_NOT_FOUND)
+    
+    except Chats.DoesNotExist:
+        return Response({'error': 'Chat not found'}, status=status.HTTP_404_NOT_FOUND)
+    
+    except Exception as e:
+        logger.error(f'Message retrieval error: {str(e)}')
+        return Response({'error': 'Failed to retrieve messages'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
