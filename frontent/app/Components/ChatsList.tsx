@@ -12,6 +12,8 @@ const ChatsList = ({ chats }: { chats: Chat[] }) => {
     return (
         <View className="flex-col w-full h-full p-4">
             <FlatList
+                ItemSeparatorComponent={() => <View className="h-3" />} // Adds gap
+                contentContainerStyle={{ paddingVertical: 10 }}
                 data={chats}
                 renderItem={({ item: chat }) => (
                     <ChatCard

@@ -1,11 +1,13 @@
 // app/login.tsx
 
-import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import React, { useContext, useState } from "react";
+import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
 import { useRouter } from "expo-router";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import axios from "axios";
+import { AuthContext } from "@/app/redux_wra/AuthContext";
 export default function RegisterScreen() {
+    const { setUserId } = useContext(AuthContext);
     const router = useRouter();
     const [username, setUsername] = useState("");
     const [emailId, setEmailId] = useState("");
@@ -13,16 +15,30 @@ export default function RegisterScreen() {
     const [checkpassword, setCheckPassword] = useState("");
     const [pswdNotMatch, setPswdNotMatch] = useState(false);
     const handleRegister = async () => {
+        console.log("all2");
         if (password != checkpassword) {
+            console.log("hi2");
             setPswdNotMatch(true);
         } else {
+            console.log("hi");
+            console.log(emailId);
+            console.log(password + " ass");
             const request = await axios.post(
-                "http://127.0.0.1:8000/api/register/",
-                { email: emailId, password: password }
+                "http://192.168.25.62:8000/api/register/",
+                { email: emailId, password: password, role: "patient" },
+                { headers: { "Content-Type": "application/json" } }
             );
+            console.log("h2i");
             const response = request.data;
+            if (response && response.user_id) {
+                console.log(response);
+                setUserId(response.user_id);
+                Alert.alert(
+                    "Registration Success !",
+                    "Your profile is successfully made"
+                );
+            }
 
-            console.log(response);
             // router.push("/screens/Register/register_data")
         }
     };

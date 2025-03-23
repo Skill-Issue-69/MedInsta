@@ -19,7 +19,9 @@ const Chats = () => {
     }, []);
     return (
         <View className="flex-col">
-            <View className="h-[20px] bg-slate-500 w-full"></View>
+            <View className="h-[20px] text-[15px] bg-slate-500 w-full flex content-center">
+                Conversations
+            </View>
             <ChatsList chats={chats} />
         </View>
     );

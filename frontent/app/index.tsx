@@ -4,7 +4,7 @@ import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 import { AuthProvider } from "./redux_wra/AuthContext";
-
+import ChatsList from "./Components/ChatsList";
 export default function HomeScreen() {
     const router = useRouter();
 
@@ -34,6 +34,40 @@ export default function HomeScreen() {
                         Register
                     </Text>
                 </TouchableOpacity>
+                {/* <ChatsList
+                    chats={[
+                        {
+                            chatId: "123",
+                            sender_name: "Aniket",
+                            symptomps: "Fever, cold",
+                            date: "2022-june-02",
+                        },
+                        {
+                            chatId: "124",
+                            sender_name: "Aniket",
+                            symptomps: "Fever, cold",
+                            date: "2022-june-02",
+                        },
+                        {
+                            chatId: "125",
+                            sender_name: "Aniket",
+                            symptomps: "Fever, cold",
+                            date: "2022-june-02",
+                        },
+                        {
+                            chatId: "126",
+                            sender_name: "Aniket",
+                            symptomps: "Fever, cold",
+                            date: "2022-june-02",
+                        },
+                        {
+                            chatId: "123",
+                            sender_name: "Aniket",
+                            symptomps: "Fever, cold",
+                            date: "2022-june-02",
+                        },
+                    ]}
+                /> */}
             </View>
         </AuthProvider>
     );

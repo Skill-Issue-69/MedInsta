@@ -27,7 +27,9 @@ SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEBUG")
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["localhost", "127.0.0.1"])
+ALLOWED_HOSTS = env.list(
+    "ALLOWED_HOSTS", default=["localhost", "127.0.0.1", "192.168.25.62"]
+)
 
 # Application definition
 INSTALLED_APPS = [
@@ -54,9 +56,10 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8081",  # React frontend
+    "http://localhost:8081",
+    "http://192.168.25.62:8081",  # React frontend
 ]
-
+CORS_ORIGIN_ALLOW_ALL = True
 ROOT_URLCONF = "backend.urls"
 
 TEMPLATES = [
