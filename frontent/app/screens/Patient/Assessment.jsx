@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
     View,
     Text,
@@ -15,19 +15,11 @@ import {
     Inter_600SemiBold,
     Inter_700Bold,
 } from "@expo-google-fonts/inter";
-
-interface SymptomSelections {
-    headache: boolean;
-    soreThroat: boolean;
-    fever: boolean;
-    cold: boolean;
-    bodyAche: boolean;
-    breathing: boolean;
-    other: boolean;
-    voiceMessage: boolean;
-}
+import axios from "axios";
+import { AuthContext } from "@/app/redux_wra/AuthContext";
 
 const Assessment = () => {
+    const { userId } = useContext(AuthContext);
     const router = useRouter();
     const [fontsLoaded] = useFonts({
         Inter_400Regular,
@@ -35,31 +27,89 @@ const Assessment = () => {
         Inter_700Bold,
     });
 
-    const [selectedSymptoms, setSelectedSymptoms] = useState<SymptomSelections>(
-        {
-            headache: false,
-            soreThroat: false,
-            fever: false,
-            cold: false,
-            bodyAche: false,
-            breathing: false,
-            other: false,
-            voiceMessage: false,
-        }
-    );
+    const [selectedSymptoms, setSelectedSymptoms] = useState({
+        headache: false,
+        soreThroat: false,
+        fever: false,
+        cold: false,
+        bodyAche: false,
+        breathing: false,
+        other: false,
+        voiceMessage: false,
+    });
 
-    const [otherText, setOtherText] = useState<string>("");
-    const [days, setDays] = useState<string>("");
-    const [hours, setHours] = useState<string>("");
-    const [additionalInfo, setAdditionalInfo] = useState<string>("");
+    const [otherText, setOtherText] = useState("");
+    const [days, setDays] = useState("");
+    const [hours, setHours] = useState("");
+    const [additionalInfo, setAdditionalInfo] = useState("");
 
     const handleSubmit = async () => {
-        // ... existing submit logic ...
+        const symptoms = Object.entries(selectedSymptoms)
+            .filter(([_, value]) => value)
+            .map(([key]) => {
+                switch (key) {
+                    case "breathing":
+                        return "Trouble Breathing";
+                    case "soreThroat":
+                        return "Sore Throat";
+                    case "bodyAche":
+                        return "Body Ache";
+                    case "voiceMessage":
+                        return "Voice Message";
+                    default:
+                        return key.charAt(0).toUpperCase() + key.slice(1);
+                }
+            });
 
-        router.push("/screens/Chat");
+        if (selectedSymptoms.other && otherText) {
+            symptoms.push(otherText);
+        }
+
+        const age = 0;
+        const height = 0;
+        const weight = 0;
+        const prompt = `I have these symptoms: ${symptoms.join(", ")}. 
+    I've had these symptoms for ${days} days and ${hours} hours. 
+    My age is ${age || "unknown"}, height is ${
+            height || "unknown"
+        } cm, and weight is ${weight || "unknown"} kg. 
+    Additional information: ${additionalInfo || "none"}.`;
+
+        try {
+            const request = await axios.post(
+                "http://192.168.25.62:8000/api/chats/",
+                {
+                    message: prompt,
+                    patient_id: userId,
+                    message_type: "text",
+                }
+            );
+
+            const response = request.data;
+            const chat_id = response.chat_id;
+            const message_id = response.message_id;
+            const timestamp = response.timestamp;
+
+            const routeParams = {
+                chats: [
+                    {
+                        chat_id: chat_id,
+                        message: { message_id, message: prompt },
+                        timestamp,
+                    },
+                ],
+            };
+
+            router.push({
+                pathname: "/screens/Chat",
+                params: routeParams,
+            });
+        } catch (error) {
+            console.error("API Error:", error);
+        }
     };
 
-    const toggleSymptom = (symptom: keyof SymptomSelections) => {
+    const toggleSymptom = (symptom) => {
         setSelectedSymptoms((prev) => ({ ...prev, [symptom]: !prev[symptom] }));
     };
 
@@ -76,9 +126,7 @@ const Assessment = () => {
                 What Symptoms are you facing?
             </Text>
 
-            {/* Symptoms Grid */}
             <View className="flex-row flex-wrap justify-between mb-6">
-                {/* Column 1 */}
                 <View className="w-[48%]">
                     <SymptomButton
                         checkBtn={true}
@@ -110,7 +158,6 @@ const Assessment = () => {
                     />
                 </View>
 
-                {/* Column 2 */}
                 <View className="w-[48%]">
                     <SymptomButton
                         checkBtn={true}
@@ -137,14 +184,12 @@ const Assessment = () => {
                         checkBtn={false}
                         symptom="voiceMessage"
                         label="Voice Message"
-                        selected={selectedSymptoms.breathing}
+                        selected={selectedSymptoms.voiceMessage}
                         onPress={toggleSymptom}
                     />
-                    <TouchableOpacity></TouchableOpacity>
                 </View>
             </View>
 
-            {/* Additional Info Text Area */}
             {selectedSymptoms.other && (
                 <TextInput
                     placeholder="If Other, Please specify"
@@ -157,7 +202,16 @@ const Assessment = () => {
                 />
             )}
 
-            {/* Duration Inputs */}
+            <TextInput
+                placeholder="Type additional information here..."
+                placeholderTextColor="#9CA3AF"
+                value={additionalInfo}
+                onChangeText={setAdditionalInfo}
+                style={{ fontFamily: "Inter_400Regular" }}
+                className="text-lg border-2 border-gray-200 rounded-lg p-4 mb-6 h-32"
+                multiline
+            />
+
             <Text
                 style={{ fontFamily: "Inter_600SemiBold" }}
                 className="text-2xl text-gray-800 mb-6"
@@ -224,18 +278,9 @@ const SymptomButton = ({
     className = "",
     labelClassName = "",
     iconColor = "#3B82F6",
-}: {
-    symptom: keyof SymptomSelections;
-    label: string;
-    selected: boolean;
-    checkBtn: boolean;
-    onPress: (symptom: keyof SymptomSelections) => void;
-    className?: string;
-    labelClassName?: string;
-    iconColor?: string;
 }) => (
     <TouchableOpacity
-        className={`h-20 mb-3 flex-row items-center p-3 rounded-lg  ${
+        className={`h-20 mb-3 flex-row items-center p-3 rounded-lg ${
             checkBtn
                 ? selected
                     ? "border-blue-500 bg-blue-50"

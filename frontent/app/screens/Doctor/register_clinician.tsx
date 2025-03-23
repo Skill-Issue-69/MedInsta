@@ -25,18 +25,18 @@ export default function RegisterScreen() {
             console.log(password + " ass");
             const request = await axios.post(
                 "http://192.168.25.62:8000/api/register/",
-                { email: emailId, password: password, role: "patient" },
+                { email: emailId, password: password, role: "clinician" },
                 { headers: { "Content-Type": "application/json" } }
             );
             const response = request.data;
             if (response && response.user_id) {
                 setUserId(response.user_id);
-                setRole("patient");
+                setRole("clinician");
                 Alert.alert(
                     "Registration Success !",
                     "Your profile is successfully made"
                 );
-                router.push("/screens/Register/register_data");
+                router.push("/screens/Doctor/register_data");
             }
 
             // router.push("/screens/Register/register_data")

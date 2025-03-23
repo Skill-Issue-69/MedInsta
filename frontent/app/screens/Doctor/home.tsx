@@ -1,48 +1,56 @@
-// app/login.tsx
-
-import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, Button } from "react-native";
+import React from "react";
+import { View, Text, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
-
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
+
 export default function RegisterScreen() {
     const router = useRouter();
 
     return (
         <SafeAreaProvider>
-            <SafeAreaView className="py-[50%] h-[100vh] flex-1 gap-5 justify-center items-center bg-white">
-                <Text className="text-slate-800 text-4xl font-[Montserrat] font-semibold">
-                    Hello ! Register to get Started
+            <SafeAreaView className="h-[100vh] flex-1 justify-center items-center bg-white">
+                <Text className="text-slate-800 text-4xl font-[Montserrat] font-semibold mb-10">
+                    Medinsta
                 </Text>
-                <View className="flex-col w-[100%] px-3">
-                    <View className="flex gap-3">
-                        <TouchableOpacity
-                            className="w-[20px] h-[20px] bg-blue-400 text-2xl text-white"
-                            onPress={() => console.log("open Query")}
-                        >
-                            New Query
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            className="w-[20px] h-[20px] bg-blue-400 text-2xl text-white"
-                            onPress={() => console.log("open messages")}
-                        >
-                            Messages
-                        </TouchableOpacity>
-                    </View>
-                    <View className="flex gap-3">
-                        <TouchableOpacity
-                            className="w-[20px] h-[20px] bg-blue-400 text-2xl text-white"
-                            onPress={() => console.log("open advisories")}
-                        >
+
+                <View className="flex-row flex-wrap justify-center w-[80%]">
+                    <TouchableOpacity
+                        className="bg-blue-400 w-[45%] aspect-square justify-center items-center m-2 rounded-lg"
+                        onPress={() => router.push("/screens/Doctor/Chats")}
+                    >
+                        <Text className="text-white text-2xl font-[Montserrat] font-semibold">
+                            History
+                        </Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        className="bg-blue-400 w-[45%] aspect-square justify-center items-center m-2 rounded-lg"
+                        onPress={() =>
+                            router.push("/screens/Doctor/Statistics")
+                        }
+                    >
+                        <Text className="text-white text-2xl font-[Montserrat] font-semibold">
+                            Stats
+                        </Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        className="bg-blue-400 w-[45%] aspect-square justify-center items-center m-2 rounded-lg"
+                        onPress={() => router.push("/screens/Advisories")}
+                    >
+                        <Text className="text-white text-2xl font-[Montserrat] font-semibold">
                             Advisories
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            className="w-[20px] h-[20px] bg-blue-400 text-2xl text-white"
-                            onPress={() => console.log("open notifications")}
-                        >
+                        </Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        className="bg-blue-400 w-[45%] aspect-square justify-center items-center m-2 rounded-lg"
+                        onPress={() => console.log("open Notifications")}
+                    >
+                        <Text className="text-white text-2xl font-[Montserrat] font-semibold">
                             Notifications
-                        </TouchableOpacity>
-                    </View>
+                        </Text>
+                    </TouchableOpacity>
                 </View>
             </SafeAreaView>
         </SafeAreaProvider>

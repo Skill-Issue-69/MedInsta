@@ -22,7 +22,7 @@ export default function RegisterScreen() {
 
     const handleDataFeed = async () => {
         router.push({
-            pathname: "/screens/Register/register_data_next",
+            pathname: "/screens/Patient/register_data_next",
             params: {
                 name: firstName + " " + lastName,
                 state: state,

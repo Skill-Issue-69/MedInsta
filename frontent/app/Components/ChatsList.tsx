@@ -3,7 +3,7 @@ import React from "react";
 import ChatCard from "./ChatCard";
 
 interface Chat {
-    chatId: string;
+    chat_id: string;
     sender_name: string;
     symptomps: string;
     date: string;
@@ -18,12 +18,12 @@ const ChatsList = ({ chats }: { chats: Chat[] }) => {
                 renderItem={({ item: chat }) => (
                     <ChatCard
                         date={chat.date}
-                        chatId={chat.chatId}
+                        chatId={chat.chat_id}
                         name={chat.sender_name}
                         symptomps={chat.symptomps}
                     />
                 )}
-                keyExtractor={(chat) => chat.chatId}
+                keyExtractor={(chat) => chat.chat_id}
             ></FlatList>
         </View>
     );
