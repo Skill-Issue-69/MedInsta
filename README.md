@@ -69,6 +69,8 @@ This command generates a QR code. You can:
 - Scan it using the [Expo Go App](https://expo.dev/client) on your phone.
 - Open the project in a browser or emulator.
 
+---
+
 
 ## 💡 Useful Commands  
 
