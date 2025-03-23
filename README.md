@@ -7,7 +7,7 @@ Welcome to **MedInsta**! 🎉 This repo contains both the **Frontend (React Nati
 ## 📥 Clone the Repository  
 
 ```sh
-git clone <your-repo-link>
+git clone [(https://github.com/Skill-Issue-69/MedInsta)]
 cd my-awesome-project
 ```
 
