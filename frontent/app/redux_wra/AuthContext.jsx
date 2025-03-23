@@ -8,14 +8,19 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (credentials) => {
         // Simulate API call to Django backend for login
-        const response = await axios.post("127.0.0.1:8000/api/login", {
-            email: credentials.email,
-            password: credentials.password,
-        });
-        const data = await response.json();
+        console.log(credentials);
+        const response = await axios.post(
+            "http://192.168.25.62:8000/api/login/",
+            {
+                email: credentials.email,
+                password: credentials.password,
+            }
+        );
+        const data = response.data;
+
         if (response.status == 200) {
             setRole(data.role); // Assuming backend sends the user's role
-            setUserId(data.userId); // Assuming backend sends the user's role
+            setUserId(data.user_id); // Assuming backend sends the user's role
             return true;
         }
         return false;

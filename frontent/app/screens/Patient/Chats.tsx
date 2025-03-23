@@ -9,7 +9,7 @@ const Chats = () => {
     useEffect(() => {
         const fetchChats = async () => {
             const request = await axios.get(
-                "127.0.0.1:8000/api/chats/" + userId
+                "http://192.168.25.62:8000/api/chats/" + userId
             );
             const response = request.data;
             setChats(response.chats);
