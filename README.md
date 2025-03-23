@@ -7,7 +7,7 @@ Welcome to **MedInsta**! 🎉 This repo contains both the **Frontend (React Nati
 ## 📥 Clone the Repository  
 
 ```sh
-git clone [(https://github.com/Skill-Issue-69/MedInsta)]
+git clone https://github.com/Skill-Issue-69/MedInsta
 cd my-awesome-project
 ```
 
@@ -106,9 +106,7 @@ npx expo start
 📌 Check out the following:  
 - [Django Documentation](https://docs.djangoproject.com/en/stable/) 📖  
 - [React Native Docs](https://reactnative.dev/docs/getting-started) 📱  
-- [Expo Documentation](https://docs.expo.dev/) 🚀  
-
-💬 **Have any issues? Feel free to open a** [GitHub issue](https://github.com/yourusername/my-awesome-project/issues) 💡  
+- [Expo Documentation](https://docs.expo.dev/) 🚀    
 
 ---
 
