@@ -65,9 +65,9 @@ const Assessment = () => {
             symptoms.push(otherText);
         }
 
-        const age = 0;
-        const height = 0;
-        const weight = 0;
+        const age = 15;
+        const height = 145;
+        const weight = 40;
         const prompt = `I have these symptoms: ${symptoms.join(", ")}. 
     I've had these symptoms for ${days} days and ${hours} hours. 
     My age is ${age || "unknown"}, height is ${
@@ -87,10 +87,13 @@ const Assessment = () => {
             );
 
             const response = request.data;
+            if (!response?.chat_id || !response?.message_id) {
+                throw new Error("Invalid API response structure");
+            }
             const chat_id = response.chat_id;
             const message_id = response.message_id;
             const timestamp = response.timestamp;
-            console.log(response);
+
             const routeParams = {
                 chats: [
                     {
@@ -103,7 +106,12 @@ const Assessment = () => {
             console.log(routeParams.chats);
             router.push({
                 pathname: "/screens/Chat",
-                params: routeParams,
+                params: {
+                    chats: JSON.stringify(routeParams.chats), // Stringify only the array
+                    chatId: chat_id,
+                    userId: userId,
+                    chatName: "New Consultation",
+                },
             });
         } catch (error) {
             console.error("API Error:", error);

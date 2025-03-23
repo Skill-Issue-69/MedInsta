@@ -138,7 +138,7 @@ def create_chat(request):
         assigned_clinician = assign_best_clinician(chat, ai_specialty)
 
         # Create AI message with explicit ID
-        Messages.objects.create(
+        msg = Messages.objects.create(
             id=uuid.uuid4(),  # Explicit ID
             chat=chat,
             sender=system_user,
@@ -147,16 +147,19 @@ def create_chat(request):
             f"{'Assigned to: Dr. ' + assigned_clinician.id.name + ' (' + assigned_clinician.specialization + ')' if assigned_clinician else 'Awaiting clinician assignment'}",
             message_type="text",
         )
-
+        print(ml_response)
+        print(msg)
         return Response(
             {
+                "message_id": str(msg.id),
                 "chat_id": str(chat.id),
                 "symptom_id": str(symptom.id),
                 "diagnosis_id": str(diagnosis.id),
                 "assigned_clinician": (
                     str(assigned_clinician.id.id) if assigned_clinician else None
                 ),
-                "ai_response": f"AI Analysis: {ml_response.get('summary', 'Initial assessment')}",
+                "ai_response": ml_response.get("symptoms"),
+                "timestamp": str(ml_response.get("timestamp")),
             },
             status=status.HTTP_201_CREATED,
         )
