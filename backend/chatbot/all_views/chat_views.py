@@ -138,7 +138,7 @@ def create_chat(request):
         assigned_clinician = assign_best_clinician(chat, ai_specialty)
 
         # Create AI message with explicit ID
-        Messages.objects.create(
+        msg= Messages.objects.create(
             id=uuid.uuid4(),  # Explicit ID
             chat=chat,
             sender=system_user,
@@ -150,6 +150,7 @@ def create_chat(request):
 
         return Response(
             {
+                "message_id": str(msg.id),
                 "chat_id": str(chat.id),
                 "symptom_id": str(symptom.id),
                 "diagnosis_id": str(diagnosis.id),
