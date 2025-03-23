@@ -8,7 +8,7 @@ Welcome to **MedInsta**! 🎉 This repo contains both the **Frontend (React Nati
 
 ```sh
 git clone https://github.com/Skill-Issue-69/MedInsta
-cd my-awesome-project
+cd MedInsta
 ```
 
 ---
@@ -76,7 +76,7 @@ npx expo start
 ## 🎯 Project Structure  
 
 ```
-📦 my-awesome-project
+📦 MedInsta
  ┣ 📂 backend        # Django Backend
  ┃ ┣ 📂 api         # Your Django app
  ┃ ┣ 📜 manage.py   # Django management script
