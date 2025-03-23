@@ -1,4 +1,4 @@
-# 🚀 My Awesome Project  
+# 🚀 MedInsta 
 
 Welcome to **MedInsta**! 🎉 This repo contains both the **Frontend (React Native + Expo)** and the **Backend (Django REST Framework)**. Follow the steps below to get everything up and running! 🏃‍♂️💨  
 
