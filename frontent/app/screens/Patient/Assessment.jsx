@@ -76,6 +76,7 @@ const Assessment = () => {
     Additional information: ${additionalInfo || "none"}.`;
 
         try {
+            console.log("helo");
             const request = await axios.post(
                 "http://192.168.25.62:8000/api/chats/",
                 {
@@ -89,7 +90,7 @@ const Assessment = () => {
             const chat_id = response.chat_id;
             const message_id = response.message_id;
             const timestamp = response.timestamp;
-
+            console.log(response);
             const routeParams = {
                 chats: [
                     {

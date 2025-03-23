@@ -25,7 +25,9 @@ export default function RegisterScreen() {
 
                     <TouchableOpacity
                         className="bg-blue-400 w-[45%] aspect-square justify-center items-center m-2 rounded-lg"
-                        onPress={() => console.log("hello")}
+                        onPress={() =>
+                            router.push("/screens/Patient/Assessment")
+                        }
                     >
                         <Text className="text-white text-2xl font-[Montserrat] font-semibold">
                             New Chat

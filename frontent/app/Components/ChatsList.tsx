@@ -1,6 +1,5 @@
 import { View, Text, FlatList } from "react-native";
 import React from "react";
-import ChatCard from "./ChatCard";
 
 interface Chat {
     chat_id: string;
@@ -9,24 +8,7 @@ interface Chat {
     date: string;
 }
 const ChatsList = ({ chats }: { chats: Chat[] }) => {
-    return (
-        <View className="flex-col w-full h-full p-4">
-            <FlatList
-                ItemSeparatorComponent={() => <View className="h-3" />} // Adds gap
-                contentContainerStyle={{ paddingVertical: 10 }}
-                data={chats}
-                renderItem={({ item: chat }) => (
-                    <ChatCard
-                        date={chat.date}
-                        chatId={chat.chat_id}
-                        name={chat.sender_name}
-                        symptomps={chat.symptomps}
-                    />
-                )}
-                keyExtractor={(chat) => chat.chat_id}
-            ></FlatList>
-        </View>
-    );
+    return <View className="flex-col w-full h-full p-4"></View>;
 };
 
 export default ChatsList;
