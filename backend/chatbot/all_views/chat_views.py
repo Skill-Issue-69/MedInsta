@@ -344,11 +344,17 @@ def get_chats(request, user_id):
                 "media_url": latest_message.media_url,
                 "timestamp": latest_message.timestamp.isoformat(),
             }
-
+        clinician_info = {}
+        if chat.clinician:
+            clinician_info = {
+                "clinician_id": str(chat.clinician.id.id),
+                "name": chat.clinician.id.name,  # Access through OneToOne
+                "specialization": chat.clinician.specialization,
+            }
         chat_info = {
             "chat_id": str(chat.id),
             "patient_id": str(chat.patient.id) if chat.patient else None,
-            "clinician_id": str(chat.clinician.id) if chat.clinician else None,
+            "clinician_info": clinician_info if clinician_info else None,
             "last_symptom": last_symptom,
             "last_message_time": (
                 latest_message.timestamp.isoformat()

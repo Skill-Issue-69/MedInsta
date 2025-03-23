@@ -16,7 +16,7 @@ const Chat = () => {
     const [isRecording, setIsRecording] = useState(false);
     const [speechResult, setSpeechResult] = useState("");
     const [selectedFile, setSelectedFile] = useState(null);
-
+    console.log("Aniket: " + JSON.parse(params.chats));
     // Load initial chat data from params
     useEffect(() => {
         console.log("chat is here");

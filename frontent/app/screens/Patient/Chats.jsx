@@ -21,7 +21,7 @@ const Chats = () => {
             console.log(chats);
         };
         fetchChats();
-    }, [chats]);
+    }, []);
     return (
         <View className="flex-col">
             <View className="h-[20px] text-[15px] bg-slate-500 w-full flex content-center">
@@ -35,9 +35,8 @@ const Chats = () => {
                     <ChatCard
                         date={chat.last_message_time}
                         chatId={chat.chat_id}
-                        name={chat.sender_name}
-                        sender={chat.clinician_id}
-                        symptomps={chat.last_symptom.description}
+                        sender={chat.clinician_info.name}
+                        symptom={chat.last_symptom}
                     />
                 )}
                 keyExtractor={(chat) => chat.chat_id}
