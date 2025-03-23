@@ -73,21 +73,6 @@ npx expo start
 
 ---
 
-## 🎯 Project Structure  
-
-```
-📦 MedInsta
- ┣ 📂 backend        # Django Backend
- ┃ ┣ 📂 api         # Your Django app
- ┃ ┣ 📜 manage.py   # Django management script
- ┃ ┣ 📜 requirements.txt  # Backend dependencies
- ┣ 📂 frontend       # React Native Frontend
- ┃ ┣ 📜 App.js      # Main entry point
- ┃ ┣ 📜 package.json # Frontend dependencies
- ┗ 📜 README.md     # This awesome guide!
-```
-
----
 
 ## 💡 Useful Commands  
 
