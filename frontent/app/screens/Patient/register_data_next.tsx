@@ -1,11 +1,12 @@
 // app/login.tsx
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, Switch } from "react-native";
 import { useRouter } from "expo-router";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import axios from "axios";
 import { useSearchParams } from "expo-router/build/hooks";
+import { AuthContext } from "@/app/redux_wra/AuthContext";
 
 export default function RegisterScreen() {
     const router = useRouter();
@@ -23,21 +24,19 @@ export default function RegisterScreen() {
     console.log(searchParams);
 
     const handleRegister = async () => {
-        // const request = await axios.post(
-        //     "http://192.168.25.62:8000/api/register/",
-        //     {
-        //         name: name,
-        //         gender: gender,
-        //         bloodGroup: bloodGroup,
-        //         smokeCigarette: smokeCigarette,
-        //         consumeAlcohol: consumeAlcohol,
-        //         chronicDisease: chronicDisease,
-        //         allergies: allergies,
-        //         height: parseFloat(height),
-        //         weight: parseFloat(weight),
-        //         contactNumber: contactNumber,
-        //     }
-        // );
+        const { userId } = useContext(AuthContext);
+        const request = await axios.put(
+            "http://192.168.25.62:8000/api/users/",
+            {
+                name: name,
+                gender: gender,
+                bloodGroup: bloodGroup,
+                allergies: allergies,
+                height: parseFloat(height),
+                weight: parseFloat(weight),
+                contactNumber: contactNumber,
+            }
+        );
         router.push("/screens/Patient/home");
     };
 

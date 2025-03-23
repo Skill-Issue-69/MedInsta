@@ -11,21 +11,39 @@ import axios from "axios";
 const Chat = () => {
     const router = useRouter();
     const params = useLocalSearchParams();
-    const [messagesList, setMessages] = useState(params.chats || []);
+    const [messagesList, setMessages] = useState([]);
     const [inputVal, setInputVal] = useState("");
     const [isRecording, setIsRecording] = useState(false);
     const [speechResult, setSpeechResult] = useState("");
     const [selectedFile, setSelectedFile] = useState(null);
-    console.log("Aniket: " + JSON.parse(params.chats));
-    // Load initial chat data from params
+    // Properly parse params
     useEffect(() => {
-        console.log("chat is here");
-        console.log(params);
-        console.log(messagesList);
+        console.log("Initial params:", params);
         if (params.chats) {
-            setMessages(JSON.parse(params.chats));
+            try {
+                const parsedChats = JSON.parse(params.chats);
+                setMessages(parsedChats);
+                console.log("Successfully parsed chats:", parsedChats);
+            } catch (error) {
+                console.error("Error parsing chats:", error);
+                Alert.alert("Error", "Failed to load chat history");
+            }
         }
     }, [params.chats]);
+    useEffect(() => {
+        console.log("Received params:", params);
+        console.log("Parsed chats:", messagesList);
+    }, [params, messagesList]);
+    useEffect(() => {
+        if (Array.isArray(messagesList)) {
+            messagesList.forEach((msg) => {
+                if (!msg.id || !msg.message) {
+                    console.warn("Invalid message format:", msg);
+                }
+            });
+        }
+    }, [messagesList]);
+    // Rest of the component remains the same...
 
     const requestMicrophonePermission = async () => {
         const { status } = await Permissions.askAsync(
@@ -93,6 +111,7 @@ const Chat = () => {
                 status: "sent",
                 timestamp: new Date().toISOString(),
             };
+            console.log;
 
             // Update local state immediately
             setMessages((prev) => [...prev, newMessage]);

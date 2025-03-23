@@ -23,22 +23,22 @@ export default function RegisterScreen() {
     console.log(searchParams);
 
     const handleRegister = async () => {
-        // const request = await axios.post(
-        //     "http://192.168.25.62:8000/api/register/",
-        //     {
-        //         name: name,
-        //         gender: gender,
-        //         bloodGroup: bloodGroup,
-        //         smokeCigarette: smokeCigarette,
-        //         consumeAlcohol: consumeAlcohol,
-        //         chronicDisease: chronicDisease,
-        //         allergies: allergies,
-        //         height: parseFloat(height),
-        //         weight: parseFloat(weight),
-        //         contactNumber: contactNumber,
-        //     }
-        // );
-        router.push("/screens/Patient/home");
+        const request = await axios.post(
+            "http://192.168.25.62:8000/api/register/",
+            {
+                name: name,
+                gender: gender,
+                bloodGroup: bloodGroup,
+                smokeCigarette: smokeCigarette,
+                consumeAlcohol: consumeAlcohol,
+                chronicDisease: chronicDisease,
+                allergies: allergies,
+                height: parseFloat(height),
+                weight: parseFloat(weight),
+                contactNumber: contactNumber,
+            }
+        );
+        router.push("/screens/Doctor/home");
     };
 
     return (
